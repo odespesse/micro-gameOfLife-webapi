@@ -1,5 +1,6 @@
 package fr.olived19.microgameoflife.webapi;
 
+import fr.olived19.microgameoflife.webapi.resources.GridNextResource;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -12,7 +13,7 @@ public class MicroGameOfLifeWebApiApplication extends Application<MicroGameOfLif
 
     @Override
     public String getName() {
-        return "micro-gameoflife-webapi";
+        return "microGameOfLifeWebApi";
     }
 
     @Override
@@ -21,8 +22,8 @@ public class MicroGameOfLifeWebApiApplication extends Application<MicroGameOfLif
     }
 
     @Override
-    public void run(final MicroGameOfLifeWebApiConfiguration configuration,
-                    final Environment environment) {
-        // TODO: implement application
+    public void run(final MicroGameOfLifeWebApiConfiguration configuration, final Environment environment) {
+        final GridNextResource resource = new GridNextResource();
+        environment.jersey().register(resource);
     }
 }
