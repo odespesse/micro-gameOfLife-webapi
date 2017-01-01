@@ -1,5 +1,5 @@
 server:
-  applicationContextPath: /0.1
+  applicationContextPath: /v1.0
 logging:
   level: INFO
   loggers:

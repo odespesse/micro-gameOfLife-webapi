@@ -1,5 +1,7 @@
 package fr.olived19.microgameoflife.webapi;
 
+import fr.olived19.microgameoflife.core.Automaton;
+import fr.olived19.microgameoflife.webapi.core.services.GridService;
 import fr.olived19.microgameoflife.webapi.resources.GridNextResource;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
@@ -23,7 +25,8 @@ public class MicroGameOfLifeWebApiApplication extends Application<MicroGameOfLif
 
     @Override
     public void run(final MicroGameOfLifeWebApiConfiguration configuration, final Environment environment) {
-        final GridNextResource resource = new GridNextResource();
+        final GridService gridService = new GridService(new Automaton());
+        final GridNextResource resource = new GridNextResource(gridService);
         environment.jersey().register(resource);
     }
 }

@@ -1,29 +1,33 @@
 package fr.olived19.microgameoflife.webapi.resources;
 
-import fr.olived19.microgameoflife.webapi.api.GridRequest;
+import fr.olived19.microgameoflife.core.Grid;
+import fr.olived19.microgameoflife.webapi.api.NewGridDto;
+import fr.olived19.microgameoflife.webapi.api.NewGridRequest;
+import fr.olived19.microgameoflife.webapi.core.helpers.GridHelper;
+import fr.olived19.microgameoflife.webapi.core.services.GridService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import javax.ws.rs.GET;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 @Path("/grid/next")
 @Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class GridNextResource {
 
-    @GET
-    public List<List<Integer>> nextGrid(GridRequest gridRequest) {
-        List<List<Integer>> seed = new ArrayList<>();
-        seed.add(Arrays.asList(0, 0,  0,  0));
-        seed.add(Arrays.asList(0, 1, 1, 0));
-        seed.add(Arrays.asList(0, 1, 1, 0));
-        seed.add(Arrays.asList(0, 0,  0,  0));
-        return seed;
+    private final GridService gridService;
+
+    public GridNextResource(GridService gridService) {
+        this.gridService = gridService;
+    }
+
+    @POST
+    public NewGridDto nextGrid(@NotNull @Valid NewGridRequest newGridRequest) {
+        Grid grid = this.gridService.nextGeneration(newGridRequest);
+        return new NewGridDto(GridHelper.gridToBooleanList(grid), grid.getGeneration());
     }
 }

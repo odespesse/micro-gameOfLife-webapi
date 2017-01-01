@@ -40,6 +40,12 @@
             <groupId>io.dropwizard</groupId>
             <artifactId>dropwizard-core</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>fr.olived19.microgameoflife.core</groupId>
+            <artifactId>micro-gameoflife-core</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 
     <build>
