@@ -5,15 +5,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-public class NewGridRequest {
+public class NextWorldRequest {
 
     private final List<List<Boolean>> grid;
-    private final int currentGeneration;
+    private final int generation;
 
     @JsonCreator
-    public NewGridRequest(@JsonProperty("grid") List<List<Boolean>> grid, @JsonProperty("currentGeneration") int currentGeneration) {
+    public NextWorldRequest(@JsonProperty("grid") List<List<Boolean>> grid, @JsonProperty("generation") int generation) {
         this.grid = grid;
-        this.currentGeneration = currentGeneration;
+        this.generation = generation;
     }
 
     @JsonProperty("grid")
@@ -21,8 +21,8 @@ public class NewGridRequest {
         return this.grid;
     }
 
-    @JsonProperty("currentGeneration")
-    public int getCurrentGeneration() {
-        return this.currentGeneration;
+    @JsonProperty("generation")
+    public int getGeneration() {
+        return this.generation;
     }
 }

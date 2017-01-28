@@ -1,15 +1,15 @@
 package fr.olived19.microgameoflife.webapi.core.helpers;
 
 import fr.olived19.microgameoflife.core.Cell;
-import fr.olived19.microgameoflife.core.Grid;
-import fr.olived19.microgameoflife.webapi.api.NewGridRequest;
+import fr.olived19.microgameoflife.core.World;
+import fr.olived19.microgameoflife.webapi.api.NextWorldRequest;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GridHelper {
+public class WorldHelper {
 
-    public static Grid gridFromRequest(NewGridRequest request) {
+    public static World worldFromRequest(NextWorldRequest request) {
         List<List<Cell>> grid = new ArrayList();
         for(List<Boolean> list : request.getGrid()) {
             List<Cell> nlc = new ArrayList();
@@ -19,19 +19,19 @@ public class GridHelper {
             }
             grid.add(nlc);
         }
-        return new Grid(grid, request.getCurrentGeneration());
+        return new World(grid, request.getGeneration());
     }
 
-    public static List<List<Boolean>> gridToBooleanList(Grid grid) {
-        List<List<Boolean>> result = new ArrayList();
-        for(List<Cell> list : grid.asList()) {
+    public static List<List<Boolean>> gridToBooleanList(World world) {
+        List<List<Boolean>> grid = new ArrayList();
+        for(List<Cell> list : world.getGridAsList()) {
             List<Boolean> nlc = new ArrayList();
             for(Cell c : list) {
                 Boolean b = c == Cell.alive ? Boolean.TRUE: Boolean.FALSE;
                 nlc.add(b);
             }
-            result.add(nlc);
+            grid.add(nlc);
         }
-        return result;
+        return grid;
     }
 }

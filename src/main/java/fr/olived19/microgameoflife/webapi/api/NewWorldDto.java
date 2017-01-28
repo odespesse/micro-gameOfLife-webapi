@@ -2,12 +2,12 @@ package fr.olived19.microgameoflife.webapi.api;
 
 import java.util.List;
 
-public class NewGridDto {
+public class NewWorldDto {
 
     private List<List<Boolean>> grid = null;
     private int generation = 0;
 
-    public NewGridDto(List<List<Boolean>> grid, int generation) {
+    public NewWorldDto(List<List<Boolean>> grid, int generation) {
         this.grid = grid;
         this.generation = generation;
     }
