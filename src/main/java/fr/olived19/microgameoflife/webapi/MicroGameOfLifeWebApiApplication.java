@@ -2,6 +2,7 @@ package fr.olived19.microgameoflife.webapi;
 
 import fr.olived19.microgameoflife.core.Automaton;
 import fr.olived19.microgameoflife.webapi.core.services.WorldService;
+import fr.olived19.microgameoflife.webapi.health.AliveHealthCheck;
 import fr.olived19.microgameoflife.webapi.resources.CorsFilter;
 import fr.olived19.microgameoflife.webapi.resources.NextWorldResource;
 import io.dropwizard.Application;
@@ -26,8 +27,10 @@ public class MicroGameOfLifeWebApiApplication extends Application<MicroGameOfLif
 
     @Override
     public void run(final MicroGameOfLifeWebApiConfiguration configuration, final Environment environment) {
-        final WorldService worldService = new WorldService(new Automaton());
+        final Automaton automaton = new Automaton();
+        final WorldService worldService = new WorldService(automaton);
         final NextWorldResource resource = new NextWorldResource(worldService);
+        environment.healthChecks().register("worldsIterates", new AliveHealthCheck(worldService));
         CorsFilter.enable(environment);
         environment.jersey().register(resource);
     }
