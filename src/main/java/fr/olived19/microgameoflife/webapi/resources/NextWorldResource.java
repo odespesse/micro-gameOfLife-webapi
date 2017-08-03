@@ -1,10 +1,9 @@
 package fr.olived19.microgameoflife.webapi.resources;
 
-import fr.olived19.microgameoflife.core.World;
 import fr.olived19.microgameoflife.webapi.api.NewWorldDto;
 import fr.olived19.microgameoflife.webapi.api.NextWorldRequest;
-import fr.olived19.microgameoflife.webapi.core.helpers.WorldHelper;
 import fr.olived19.microgameoflife.webapi.core.services.WorldService;
+import messages.NewWorldGenerated;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -13,6 +12,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import java.util.UUID;
 
 @Path("/world/next")
 @Produces(MediaType.APPLICATION_JSON)
@@ -27,7 +27,8 @@ public class NextWorldResource {
 
     @POST
     public NewWorldDto nextGrid(@NotNull @Valid NextWorldRequest nextWorldRequest) {
-        World world = this.worldService.nextGeneration(nextWorldRequest);
-        return new NewWorldDto(WorldHelper.gridToBooleanList(world), world.getGeneration());
+        String correlationId = UUID.randomUUID().toString();
+        NewWorldGenerated worldMessage = this.worldService.nextGeneration(nextWorldRequest, correlationId);
+        return new NewWorldDto(worldMessage.getGrid(), worldMessage.getGeneration());
     }
 }

@@ -42,10 +42,11 @@
         </dependency>
 
         <dependency>
-            <groupId>fr.olived19.microgameoflife.core</groupId>
-            <artifactId>micro-gameoflife-core</artifactId>
-            <version>1.0</version>
+            <groupId>fr.olived19.microgameoflife.messagequeue</groupId>
+            <artifactId>micro-gameoflife-messagequeue</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
+
     </dependencies>
 
     <build>

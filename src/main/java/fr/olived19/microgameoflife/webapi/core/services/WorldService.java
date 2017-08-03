@@ -1,21 +1,24 @@
 package fr.olived19.microgameoflife.webapi.core.services;
 
-import fr.olived19.microgameoflife.core.Automaton;
-import fr.olived19.microgameoflife.core.World;
 import fr.olived19.microgameoflife.webapi.api.NextWorldRequest;
-import fr.olived19.microgameoflife.webapi.core.helpers.WorldHelper;
-
+import messages.NewWorldGenerated;
+import messages.NextWorldRequested;
+import queue.QueueConnection;
+import queue.RPCClient;
 
 public class WorldService {
 
-    private final Automaton automaton;
+    final private QueueConnection queueConnection;
 
-    public WorldService(Automaton automaton) {
-        this.automaton = automaton;
+    public WorldService(QueueConnection queueConnection) {
+        this.queueConnection = queueConnection;
     }
 
-    public World nextGeneration(NextWorldRequest nextWorldRequest) {
-        World grid = WorldHelper.worldFromRequest(nextWorldRequest);
-        return automaton.createNextGeneration(grid);
+    public NewWorldGenerated nextGeneration(NextWorldRequest nextWorldRequest, String correlationId) {
+        NextWorldRequested requestMessage = new NextWorldRequested(correlationId, nextWorldRequest.getGrid(), nextWorldRequest.getGeneration());
+        String message = requestMessage.asString();
+        RPCClient client = new RPCClient(queueConnection);
+        String result = client.publishMessage(message, correlationId);
+        return NewWorldGenerated.fromString(result);
     }
 }

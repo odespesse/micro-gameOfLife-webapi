@@ -1,14 +1,14 @@
 package fr.olived19.microgameoflife.webapi.health;
 
 import com.codahale.metrics.health.HealthCheck;
-import fr.olived19.microgameoflife.core.World;
 import fr.olived19.microgameoflife.webapi.api.NextWorldRequest;
-import fr.olived19.microgameoflife.webapi.core.helpers.WorldHelper;
 import fr.olived19.microgameoflife.webapi.core.services.WorldService;
+import messages.NewWorldGenerated;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 public class AliveHealthCheck extends HealthCheck {
 
@@ -21,9 +21,10 @@ public class AliveHealthCheck extends HealthCheck {
     @Override
     protected Result check() throws Exception {
         NextWorldRequest worldToCheck = buildWorldToCheck();
-        World nextWorld = this.worldService.nextGeneration(worldToCheck);
+        String correlationId = UUID.randomUUID().toString();
+        NewWorldGenerated nextWorldMessage = this.worldService.nextGeneration(worldToCheck, correlationId);
         NextWorldRequest expectedWorld = buildExpectedWorld();
-        ErrorResult res = compareWorlds(expectedWorld, nextWorld);
+        ErrorResult res = compareWorlds(expectedWorld, nextWorldMessage);
         if (res.hasError) {
             return Result.unhealthy(res.errorMessage);
         }
@@ -52,11 +53,11 @@ public class AliveHealthCheck extends HealthCheck {
         return new NextWorldRequest(expectedGrid, expectedGeneration);
     }
 
-    private ErrorResult compareWorlds(NextWorldRequest expectedWorld, World nextWorld) {
-        if (nextWorld.getGeneration() != expectedWorld.getGeneration()) {
-            return new ErrorResult(true, String.format("Not next generation expected %s, actual %s", expectedWorld.getGeneration(), nextWorld.getGeneration()));
+    private ErrorResult compareWorlds(NextWorldRequest expectedWorld, NewWorldGenerated nextWorldMessage) {
+        if (nextWorldMessage.getGeneration() != expectedWorld.getGeneration()) {
+            return new ErrorResult(true, String.format("Not next generation expected %s, actual %s", expectedWorld.getGeneration(), nextWorldMessage.getGeneration()));
         }
-        List<List<Boolean>> nextGrid = WorldHelper.gridToBooleanList(nextWorld);
+        List<List<Boolean>> nextGrid = nextWorldMessage.getGrid();
         if (nextGrid.size() != expectedWorld.getGrid().size()) {
             return new ErrorResult(true, String.format("Not next grid size expected %s, actual %s", expectedWorld.getGrid().size(), nextGrid.size()));
         }
