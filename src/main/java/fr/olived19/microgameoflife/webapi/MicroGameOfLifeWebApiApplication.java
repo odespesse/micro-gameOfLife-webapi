@@ -1,5 +1,6 @@
 package fr.olived19.microgameoflife.webapi;
 
+import fr.olived19.microgameoflife.queue.QueueConnection;
 import fr.olived19.microgameoflife.webapi.core.services.WorldService;
 import fr.olived19.microgameoflife.webapi.health.AliveHealthCheck;
 import fr.olived19.microgameoflife.webapi.resources.CorsFilter;
@@ -7,7 +8,6 @@ import fr.olived19.microgameoflife.webapi.resources.NextWorldResource;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
-import queue.QueueConnection;
 
 public class MicroGameOfLifeWebApiApplication extends Application<MicroGameOfLifeWebApiConfiguration> {
 

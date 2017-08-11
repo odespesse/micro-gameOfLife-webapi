@@ -1,9 +1,9 @@
 package fr.olived19.microgameoflife.webapi.health;
 
 import com.codahale.metrics.health.HealthCheck;
+import fr.olived19.microgameoflife.messages.NewWorldGenerated;
 import fr.olived19.microgameoflife.webapi.api.NextWorldRequest;
 import fr.olived19.microgameoflife.webapi.core.services.WorldService;
-import messages.NewWorldGenerated;
 
 import java.util.ArrayList;
 import java.util.Arrays;

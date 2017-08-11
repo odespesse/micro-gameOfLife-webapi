@@ -1,9 +1,9 @@
 package fr.olived19.microgameoflife.webapi.resources;
 
+import fr.olived19.microgameoflife.messages.NewWorldGenerated;
 import fr.olived19.microgameoflife.webapi.api.NewWorldDto;
 import fr.olived19.microgameoflife.webapi.api.NextWorldRequest;
 import fr.olived19.microgameoflife.webapi.core.services.WorldService;
-import messages.NewWorldGenerated;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;

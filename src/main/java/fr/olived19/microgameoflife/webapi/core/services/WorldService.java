@@ -1,10 +1,10 @@
 package fr.olived19.microgameoflife.webapi.core.services;
 
 import fr.olived19.microgameoflife.webapi.api.NextWorldRequest;
-import messages.NewWorldGenerated;
-import messages.NextWorldRequested;
-import queue.QueueConnection;
-import queue.RPCClient;
+import fr.olived19.microgameoflife.messages.NewWorldGenerated;
+import fr.olived19.microgameoflife.messages.NextWorldRequested;
+import fr.olived19.microgameoflife.queue.QueueConnection;
+import fr.olived19.microgameoflife.queue.RPCClient;
 
 public class WorldService {
 
