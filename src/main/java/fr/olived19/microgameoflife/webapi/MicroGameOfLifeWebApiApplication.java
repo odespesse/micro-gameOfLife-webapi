@@ -25,7 +25,7 @@ public class MicroGameOfLifeWebApiApplication extends Application<MicroGameOfLif
     @Override
     public void initialize(final Bootstrap<MicroGameOfLifeWebApiConfiguration> bootstrap) {
         queueConnection = new QueueConnection();
-        queueConnection.setHost("localhost");
+        queueConnection.setHost("messagequeue");
         queueConnection.connect();
     }
 
