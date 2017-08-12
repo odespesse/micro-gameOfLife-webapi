@@ -8,17 +8,17 @@
 #   docker build -t mgol-webapi:<VERSION> .
 #
 #   # Run service
-#   docker run --name mgol-webapi:<VERSION> -p 8081:8081 -d mgol-webapi
+#   docker run --name mgol-webapi -p 8180:8180 -p 80:80 -d mgol-webapi:<VERSION>
 #
 
 # Base docker image
-FROM openjdk:8
+FROM openjdk:8u131-jre-alpine
 MAINTAINER Olivier Despesse <olived19@gmail.com>
 
 EXPOSE 80 8081
-COPY microGameOfLifeWebApi-<VERSION>.jar /opt/webapi/
+COPY micro-gameoflife-webapi-<VERSION>.jar /opt/webapi/
 COPY config.yml /opt/webapi/
 WORKDIR /opt/webapi
 
-ENTRYPOINT ["java", "-jar", "microGameOfLifeWebApi-<VERSION>.jar", "server"]
+ENTRYPOINT ["java", "-jar", "micro-gameoflife-webapi-<VERSION>.jar", "server"]
 CMD ["./config.yml"]
