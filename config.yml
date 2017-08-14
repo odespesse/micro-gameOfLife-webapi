@@ -7,3 +7,4 @@ logging:
   level: WARN
   loggers:
     fr.olived19.microgameoflife.webapi: INFO
+messageQueueHostname: messagequeue

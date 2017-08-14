@@ -30,7 +30,7 @@ public class MicroGameOfLifeWebApiApplication extends Application<MicroGameOfLif
 
     @Override
     public void run(final MicroGameOfLifeWebApiConfiguration configuration, final Environment environment) {
-        QueueConnection queueConnection = connectToMessageQueue();
+        QueueConnection queueConnection = connectToMessageQueue(configuration);
         final WorldService worldService = new WorldService(queueConnection);
         final NextWorldResource resource = new NextWorldResource(worldService);
         environment.healthChecks().register("worldsIterates", new AliveHealthCheck(worldService));
@@ -38,13 +38,12 @@ public class MicroGameOfLifeWebApiApplication extends Application<MicroGameOfLif
         environment.jersey().register(resource);
     }
 
-    private QueueConnection connectToMessageQueue() {
+    private QueueConnection connectToMessageQueue(final MicroGameOfLifeWebApiConfiguration configuration) {
         QueueConnection queueConnection = new QueueConnection();
-        String messageQueueHost = "messagequeue";
-        queueConnection.setHost(messageQueueHost);
-        LOG.info("Connecting to {}", messageQueueHost);
+        queueConnection.setHost(configuration.getMessageQueueHostname());
+        LOG.info("Connecting to {}", configuration.getMessageQueueHostname());
         queueConnection.connect();
-        LOG.info("Connection successful to {}", messageQueueHost);
+        LOG.info("Connection successful to {}", configuration.getMessageQueueHostname());
         return queueConnection;
     }
 }
