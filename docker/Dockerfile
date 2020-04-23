@@ -12,7 +12,7 @@
 #
 
 # Base docker image
-FROM openjdk:8u131-jre-alpine
+FROM openjdk:11.0.7-jre-slim-buster
 MAINTAINER Olivier Despesse <olived19@gmail.com>
 
 EXPOSE 80 8081
